@@ -1,10 +1,30 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { getScreenshot } from "./_lib/chromium";
-import fetch from "isomorphic-fetch"
+import fetch from "isomorphic-fetch";
 const isDev = !process.env.AWS_REGION;
 const isHtmlDebug = process.env.OG_HTML_DEBUG === "1";
 
-export default async function handler(
+const allowCors =
+  (fn: Function) => async (req: IncomingMessage, res: ServerResponse) => {
+    res.setHeader("Access-Control-Allow-Credentials", 1);
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+    );
+    if (req.method === "OPTIONS") {
+      res.statusCode =200;
+      res.end()
+      return;
+    }
+    return await fn(req, res);
+  };
+
+const handler = async function handler(
   req: IncomingMessage,
   res: ServerResponse
 ) {
@@ -16,8 +36,8 @@ export default async function handler(
     `
     );
 
-    const { html } = await iframelyResponse.json() as {html: string};
-    
+    const { html } = (await iframelyResponse.json()) as { html: string };
+
     if (isHtmlDebug) {
       res.setHeader("Content-Type", "text/html");
       res.end(html);
@@ -26,6 +46,7 @@ export default async function handler(
     const fileType = "jpeg";
     const file = await getScreenshot(html, fileType, isDev);
     res.statusCode = 200;
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Content-Type", `image/${fileType}`);
     res.end(file);
   } catch (e) {
@@ -34,4 +55,6 @@ export default async function handler(
     res.end("<h1>Internal Error</h1><p>Sorry, there was a problem</p>");
     console.error(e);
   }
-}
+};
+
+export default allowCors(handler);
