@@ -23,7 +23,7 @@ export default async function handler(
       res.end(html);
       return;
     }
-    const fileType = "png";
+    const fileType = "jpeg";
     const file = await getScreenshot(html, fileType, isDev);
     res.statusCode = 200;
     res.setHeader("Content-Type", `image/${fileType}`);
