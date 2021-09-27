@@ -4,25 +4,6 @@ import fetch from "isomorphic-fetch";
 const isDev = !process.env.AWS_REGION;
 const isHtmlDebug = process.env.OG_HTML_DEBUG === "1";
 
-const allowCors =
-  (fn: Function) => async (req: IncomingMessage, res: ServerResponse) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-    );
-    if (req.method === "OPTIONS") {
-      res.statusCode =200;
-      res.end()
-      return;
-    }
-    return await fn(req, res);
-  };
-
 export default async function handler(
   req: IncomingMessage,
   res: ServerResponse
