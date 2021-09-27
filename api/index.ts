@@ -6,7 +6,6 @@ const isHtmlDebug = process.env.OG_HTML_DEBUG === "1";
 
 const allowCors =
   (fn: Function) => async (req: IncomingMessage, res: ServerResponse) => {
-    res.setHeader("Access-Control-Allow-Credentials", 1);
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
       "Access-Control-Allow-Methods",
