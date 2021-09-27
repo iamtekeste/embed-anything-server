@@ -46,7 +46,6 @@ const handler = async function handler(
     const fileType = "jpeg";
     const file = await getScreenshot(html, fileType, isDev);
     res.statusCode = 200;
-    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Content-Type", `image/${fileType}`);
     res.end(file);
   } catch (e) {

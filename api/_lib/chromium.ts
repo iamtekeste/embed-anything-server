@@ -24,6 +24,7 @@ export async function getScreenshot(
     .replace(new RegExp("//cdn.iframe.ly", "g"), "https://cdn.iframe.ly");
   await page.setContent(htmlContent);
   await page.addScriptTag({ url: "https://cdn.iframe.ly/embed.js" });
+  await page.waitForSelector("iframe");
   const element = await page.$("iframe");
   if (!element) throw new Error("iframe not loading");
   const file = await element.screenshot({ type });
