@@ -24,6 +24,7 @@ export async function getOptions(isDev: boolean) {
             args: chrome.args,
             executablePath: await chrome.executablePath,
             headless: chrome.headless,
+            
         };
     }
     return options;
