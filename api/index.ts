@@ -32,6 +32,10 @@ export default async function handler(
       "Access-Control-Allow-Headers",
       "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
     );
+    res.setHeader(
+      "Accept-Encoding",
+      "gzip, br"
+    );
     if (req.method === "OPTIONS") {
       res.statusCode = 200;
       res.end();
