@@ -7,12 +7,14 @@
     "build": "tsc -p api/tsconfig.json"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "chrome-aws-lambda": "7.0.0",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^3.0.0",
     "puppeteer-core": "7.0.0"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.1",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/puppeteer": "5.4.3",
     "@types/puppeteer-core": "5.4.0",
