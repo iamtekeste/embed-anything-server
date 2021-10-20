@@ -7,6 +7,7 @@
     "build": "tsc -p api/tsconfig.json"
   },
   "dependencies": {
+    "@splitbee/node": "^0.3.1",
     "body-parser": "^1.19.0",
     "chrome-aws-lambda": "7.0.0",
     "isomorphic-fetch": "^3.0.0",
