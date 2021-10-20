@@ -10,6 +10,7 @@ export default async function handler(
     //@ts-ignore
     const {eventName} = req.body || {};
     analytics.track({
+        userId: 'default-id',
         event: eventName,
       });
     res.setHeader("Access-Control-Allow-Origin", "*");
