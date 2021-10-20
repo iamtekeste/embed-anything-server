@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-const { SplitbeeAnalytics } = require('@splitbee/node');
+const { SplitbeeAnalytics } = require("@splitbee/node");
 const analytics = new SplitbeeAnalytics(process.env.splitbee);
 
 export default async function handler(
@@ -8,11 +8,14 @@ export default async function handler(
 ) {
   try {
     //@ts-ignore
-    const {eventName} = req.body || {};
+    const { eventName } = req.body || {};
+    console.log(process.env.splitbee);
+    console.log(eventName);
+    
     analytics.track({
-        userId: 'default-id',
-        event: eventName,
-      });
+      userId: "default-id",
+      event: eventName,
+    });
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
       "Access-Control-Allow-Methods",
@@ -22,10 +25,7 @@ export default async function handler(
       "Access-Control-Allow-Headers",
       "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
     );
-    res.setHeader(
-      "Accept-Encoding",
-      "gzip, br"
-    );
+    res.setHeader("Accept-Encoding", "gzip, br");
     if (req.method === "OPTIONS") {
       res.statusCode = 200;
       res.end();
@@ -33,11 +33,11 @@ export default async function handler(
     }
     res.statusCode = 200;
     res.setHeader("Content-Type", `application/json`);
-    res.end(JSON.stringify({"success": true}));
+    res.end(JSON.stringify({ success: true }));
   } catch (e) {
     res.statusCode = 500;
     res.setHeader("Content-Type", "text/html");
     res.end("<h1>Internal Error</h1><p>Sorry, there was a problem</p>");
     console.error(e, "server");
   }
-};
+}
