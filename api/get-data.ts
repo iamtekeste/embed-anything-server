@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   try {
     //@ts-ignore
-    const {urlToBeEmbeded} = req.body || {};
+    const {urlToBeEmbeded} = req.query || {};
     const iframelyResponse = await fetch(
       `https://iframe.ly/api/iframely?url=${urlToBeEmbeded}&api_key=544a860eda25e85cbbe2c1&iframe=card&omit_script=1
     `

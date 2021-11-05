@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   try {
     //@ts-ignore
-    const {html} = req.body || {};
+    const {html} = req.query || {};
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
       "Access-Control-Allow-Methods",
